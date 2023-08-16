@@ -42,11 +42,11 @@
                 {% for comment in post.comments: %}
                 <li>
                     <div class="commenterImage">
-                      <img src="{{ comment.comment_author.email| gravatar }}"/>
+                      <img src="{{ comment.comment_author.email| gravatar }}">
                     </div>
                     <div class="commentText">
                       {{ comment.text|safe }}
-                      <div class="date sub-text">{{ comment.comment_author.name }}</div>
+                      <div class="date sub-text">{{ comment.comment_author.name }}  Posted on: {{ comment.date }} at {{ comment.time }}</div>
                     </div>
                 </li>
                 {% endfor %}

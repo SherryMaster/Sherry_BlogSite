@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
@@ -61,6 +63,8 @@ class BlogPost(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
+    date = db.Column(db.String(250), nullable=False)
+    time = db.Column(db.String(250), nullable=False)
     comment_author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     comment_author = db.relationship("User", back_populates="comments")
     post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
@@ -145,7 +149,9 @@ def show_post(post_id):
         new_comment = Comment(
             text=form.comment.data,
             comment_author=current_user,
-            parent_post=requested_post
+            parent_post=requested_post,
+            date=time.strftime("%B %d, %Y"),
+            time=time.strftime("%I:%M %p")
         )
         with db.session.begin_nested():
             db.session.add(new_comment)
